@@ -1,8 +1,5 @@
-# -*- coding: utf-8 -*-
 import re
-
 import tldextract
-
 from url_utils import RISKY_TLDS, is_trusted, normalize_url, registered_domain
 
 BRAND_TOKENS = [

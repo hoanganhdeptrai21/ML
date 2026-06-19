@@ -1,17 +1,11 @@
-# -*- coding: utf-8 -*-
 import re
 import math
 from collections import Counter
 from urllib.parse import urlparse
-
 import tldextract
-
 from heuristics import BRAND_TOKENS, SENSITIVE_KEYWORDS
 from url_utils import RISKY_TLDS, normalize_url
-
 SHORTENERS = ['bit.ly', 'tinyurl', 't.co', 'goo.gl', 'is.gd', 'bit.do']
-
-
 class FeatureExtractor:
     def __init__(self, url):
         url_str = normalize_url(url)

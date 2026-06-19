@@ -6,15 +6,12 @@ VERDICT_TEXT = {
     'suspicious': ('NGHI VAN', '\033[93m'),
     'danger': ('NGUY HIEM', '\033[91m'),
 }
-
 def load_pipeline():
     pipeline_path = os.path.join('model', 'pipeline.pkl')
     if not os.path.exists(pipeline_path):
         raise FileNotFoundError('Khong tim thay file model! Hay chay train.py truoc.')
     import joblib
     return joblib.load(pipeline_path)
-
-
 def format_result(result):
     label, color = VERDICT_TEXT.get(result['verdict'], ('KHONG XAC DINH', '\033[0m'))
     reset = '\033[0m'

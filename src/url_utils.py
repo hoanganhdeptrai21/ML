@@ -1,15 +1,11 @@
-# -*- coding: utf-8 -*-
 import os
 import re
-
 import tldextract
-
 RISKY_TLDS = {
     'win', 'top', 'xyz', 'tk', 'cc', 'icu', 'club', 'buzz', 'loan', 'work',
     'click', 'site', 'online', 'live', 'store', 'rest', 'cam', 'stream',
     'gq', 'ml', 'ga', 'cf', 'pw', 'fit', 'monster', 'sbs', 'cfd',
 }
-
 CORE_TRUSTED = {
     'youtube.com', 'google.com', 'instagram.com', 'facebook.com', 'twitter.com',
     'x.com', 'microsoft.com', 'apple.com', 'amazon.com', 'github.com',
@@ -18,15 +14,11 @@ CORE_TRUSTED = {
     'cloudflare.com', 'stackoverflow.com', 'zoom.us', 'paypal.com',
     'shopee.vn', 'lazada.vn', 'zalo.me', 'momo.vn', 'vietcombank.com.vn',
 }
-
-
 def normalize_url(url):
     url = str(url).strip().lower()
     url = url.replace('[', '').replace(']', '')
     url = re.sub(r'^(https?://)?(www\.)?', '', url)
     return url.rstrip('/').split('/')[0].split('?')[0].split('#')[0]
-
-
 def registered_domain(url_or_ext):
     if isinstance(url_or_ext, str):
         ext = tldextract.extract('http://' + normalize_url(url_or_ext))
@@ -35,8 +27,6 @@ def registered_domain(url_or_ext):
     if not ext.domain or not ext.suffix:
         return ''
     return f'{ext.domain}.{ext.suffix}'
-
-
 def load_trusted_domains(legit_path=None, top_n=8000):
     trusted = set(CORE_TRUSTED)
     if legit_path and os.path.exists(legit_path):
@@ -55,7 +45,6 @@ def is_trusted(url, trusted_domains=None):
     if trusted_domains is None:
         return domain in CORE_TRUSTED
     return domain in trusted_domains
-
 def is_noisy_benign(url):
     ext = tldextract.extract('http://' + normalize_url(url))
     if ext.suffix in RISKY_TLDS:
